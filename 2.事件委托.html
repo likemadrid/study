@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box1 {
+            width: 300px;
+            height: 300px;
+            background: green;
+        }
+
+        #box2 {
+            width: 100px;
+            height: 100px;
+            background: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box1">
+        <div id="box2"></div>
+    </div>
+    <script>
+        let box1 = document.getElementById('box1')
+        let box2 = document.getElementById('box2')
+        console.log(box1)
+        // box1.onmouseenter=function(){
+        //     console.log('323')
+        // }
+        box1.onmouseover = function () {
+            console.log('77777')
+        }
+
+
+        // 使用事件委托需要注意的事项
+        // onmouseenter和onmouseover都表示鼠标进入，它们有什么区别呢
+        // onmouseenter不冒泡，onmouseover冒泡
+        // onmouseleave不冒泡    onmouseout冒泡
+        // 使用事件委托时要注意，不能委托不冒泡的事件给祖先元素
+
+
+        // 以下事件不冒泡:
+        // blur\focus\load\unload\onmouseenter\onmouseleave,意思是,事件不会往父元素那传递
+        // 我们检查一个元素是否会冒泡,可以通过事件的以下参数
+
+        event.bubbles
+        // 如果返回值为true,说明事件会冒泡,反之则相反
+        // 举例
+        box1.onclick = function (event) {
+            event = event || window.event
+            console.log(event.bubbles)//打印结果:true,说明onclick事件是可以冒泡的
+        }
+    </script>
+
+</body>
+
+</html>

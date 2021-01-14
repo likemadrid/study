@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 事件委托（原理就是事件冒泡） -->
+
+    <!-- 批量添加事件监听 -->
+    <!-- 题目：页面上有一个无序列表<ul></ul>,它的内部只有20个<li></li>元素。请批量给它添加事件监听，
+    实现效果：点击哪个li元素，哪个li元素就变红 -->
+    <!-- ul#list>list{列表项}*20 -->
+    <!-- <ul id="list">
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+        <li>列表项</li>
+    </ul> -->
+    <script>
+        // let oli = document.querySelectorAll("#list li")
+        // 批量添加事件监听
+        // for (let i = 0; i < oli.length; i++) {
+        //     oli[i].onclick = function () {
+        //         方法一
+        //         oli[i].style.color="red"
+        //         方法二
+        //         this.style.color = "red"
+        //     }
+        // }
+
+        // 批量添加事件监听的性能问题
+        // 每一个事件监听注册都会消耗一定的系统内存，而批量添加事件会导致监听数量太多，内存消耗会非常大
+        // 实际上，每个<li>的事件处理函数都是不同的函数，这些函数本身也会占用内存
+    </script>
+
+
+
+    <!-- 新增动态绑定事件
+  题目：页面上有一个无序列表<ul>,它的内部没有<li>元素，请制作一个按钮，点击这个按钮就能增加一个<li>元素，
+  并且要求每增加的<li>元素也要有点击事件监听，实现效果点击哪个li元素，哪个li元素就变红  -->
+    <!-- <input type="button" value="按钮" id="btn">
+    <ul id="list"></ul> -->
+    <script>
+        // let oList = document.querySelector("#list")
+        // console.log(oList)
+        // let oBtn = document.querySelector('#btn')
+        // oBtn.onclick = function () {
+        //     let oLi = document.createElement("li")
+        //     oLi.innerHTML = "列表项"
+            // oLi.onclick = function () {
+            //     this.style.color = "red"
+            // }
+        //     console.log(oLi)
+        //     oList.appendChild(oLi)
+        // }
+        // 动态绑定事件的问题
+        // 新增元素必须分别添加事件监听，不能自动获得事件监听，大量事件监听、大量事件处理函数都会产生大量消耗内存
+    </script>
+
+
+    <!-- 事件委托 -->
+    <!-- 利用事件冒泡机制，将后代元素事件委托给祖先元素 -->
+    <ul id="list">
+        <!-- 监听onlick事件 -->
+        <li>列表项1</li>
+        <li>列表项2</li><!-- 不管点击任何一个li元素，事件就会通过事件冒泡传到祖先元素 -->
+        <li>列表项3</li>
+    </ul>
+    <!-- e.target和e.currentTarget属性 -->
+    <!-- 事件委托通常需要结合使用e.target属性 -->
+    <!-- target   触发此事件的最早元素，即事件源元素
+    currentTarget    事件处理程序附加到的元素 -->
+
+    <script>
+        let oList = document.querySelector("#list")
+        oList.onclick = function (e) {
+            // e.target代表真正点击到的元素
+            console.log(e.target)
+            // e.currentTarget代表事件绑定的对象
+            console.log(e.currentTarget)
+            e.target.style.color="red"
+        }
+        // 事件委托的使用场景
+        // 当有大量类似元素需要批量添加事件监听时，使用事件委托可以减少内存开销，
+        // 当有元素节点上树时，使用事件委托可以让新上树的元素具有事件监听
+
+
+        // 使用事件委托需要注意的事项
+        // onmouseenter和onmouseover都表示鼠标进入，它们有什么区别呢
+        // onmouseenter不冒泡，onmouseover冒泡
+        // 使用事件委托时要注意，不能委托不冒泡的事件给祖先元素
+    </script>
+
+
+
+</body>
+
+</html>

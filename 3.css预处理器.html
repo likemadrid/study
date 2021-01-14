@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    什么是css预处理器,什么是sass
+    sass是世界上最成熟,最稳定,最强大的专业级css扩展语言
+    css预处理有sass,less,stylus
+    <!-- 1.如何理解HTML语义化标签 -->
+    示例1:
+    <div>标题</div>
+    <div>
+        <div>一段文字</div>
+        <div>
+            <div>列表1</div>
+            <div>列表2</div>
+        </div>
+    </div>
+
+    示例二:
+    <h1>标题</h1>
+    <div>
+        <p>一段文字</p>
+        <ul>
+            <li>列表1</li>
+            <li>列表2</li>
+        </ul>
+    </div>
+
+
+    用正确的标签做正确的事情
+    1.让人更容易读懂(增加代码可读性)
+    2.让搜索引擎更容易读懂(seo)
+
+
+    <!-- 2.默认情况下,哪些HTML标签是块级元素,哪些是内联元素 -->
+    display:block/table有div h1 h2 table ul ol p等
+    display:inline/inline-block 有span img input button等
+
+    CSS3布局\响应式\定位\图文样式\动画
+    <!-- 3.盒子模型的宽度如何计算 -->
+    请问div1的offsetWidth是多大
+    offsetWidth=(内容宽度+padding+边框) 无外边距
+    因此答案为122px
+    <style>
+        #div1 {
+            width: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 10px;
+        }
+
+        /* 如何实现一个扇形 */
+        .sector {
+            width: 0;
+            height: 0;
+            border-width: 50px;
+            border-style: solid;
+            border-color: red transparent transparent;
+            border-radius: 50px;
+        }
+    </style>
+
+
+
+
+    <!-- 4.margin纵向重叠的问题 -->
+    <!-- 求AAA和BBB之间的距离是多少 -->
+    <style>
+        p {
+            font-size: 16px;
+            line-height: 1;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
+    <p>AAA</p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p>BBB</p>
+
+    相邻的margin-top和margin-bottom会发生重叠
+    空白内容的<p></p>也会发生重叠
+    答案15px
+
+
+
+    <!-- 5.margin负值的问题 -->
+    <!-- 对margin的top left right bottom 设置负值,会有什么效果 -->
+    <!-- margin-top left是平移自身 -->
+    <!-- margin-right  bottom是平移其他元素 -->
+    margin-top和margin-left负值,元素向上.向左移动
+    margin-right负值,右侧元素左移,自身不受影响
+    margin-bottom负值,下方元素上移动,自身不受影响
+
+
+    <!-- 6.BFC理解和应用 -->
+    块格式化上下文（block formatting context)
+    一块独立渲染区域，内部元素的渲染不会影响边界以外的元素
+    形成BFC的常见条件
+    float属性不为none
+    position为absolute或fixed
+    display为inline-block,table-cell,table-caption,flex,inline-flex
+    overflow不为visible
+
+    开启BFC特点作用
+    1.开启BFC的元素不会被浮动元素覆盖
+    2.开启BFC的元素父子外边距不会合并
+    3.开启BFC的元素可以包含浮动的子元素（解决浮动高度塌陷）
+
+
+
+    <!-- 7.float布局的问题以及clearfix -->
+    手写clearfix
+    <style>
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    </style>
+    <!-- 8.flex画骰子 -->
+    <!-- 用flex画三个点的骰子 -->
+
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item:nth-child(2) {
+            align-self: center;
+        }
+
+        .item:nth-child(3) {
+            align-self: flex-end;
+        }
+    </style>
+    <!-- 9.absolute和relative分别依据什么定位 -->
+    relative依据自身定位
+    absolute依据最近一层有定位的元素定位
+    <!-- 10.居中对齐有哪些实现方式 -->
+    inline/inline-block元素：text-align:center
+    block元素：margin:0 auto
+    absolute元素：left：50%+margin-left负值一半元素宽度
+    absolute元素：left,right=0+margin:0 auto
+    absolute元素：left+50%+transform:translate(-50%,0)
+    弹性元素：默认父元素：display:flex;justify-content:center
+    单元格元素table-cell元素：父元素：display:table-cell;verticle-align:middle
+    <!-- 11.line-height的继承问题 -->
+    <!-- 计算p的行高 -->
+    <style>
+        body {
+            font-size: 20px;
+            line-height: 200%;
+        }
+
+        p {
+            font-size: 16px;
+        }
+    </style>
+    <!-- 写具体数值，如30px，则继承该值
+    写比例，如2/1.5，则继承该比例
+    写百分比，如200%，则继承计算出来的值 -->
+    12.rem是什么
+    13.如何实现响应式
+    14.关于css3动画
+
+
+
+    <!--15 如何实现左边定宽，右边自适应 -->
+    1.左边盒子左浮动，右边盒子width=100%,margin-left=左盒子宽度
+    2.左盒子左浮动，右盒子右浮动，设置width=calc(100% - 左盒子宽度)
+    3.父容器设置display:flex，右盒子flex:1
+    <!-- 16.文本溢出处理 -->
+    <style>
+        .over {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .overMore {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+    //将元素作为弹性伸缩盒子模型显示
+    //用来限制再一个块元素显示的文本的行数
+    //设置或检索伸缩盒子对象的子元素的排列方式
+
+
+    <!-- 16.消除图片底部间隙的方法 -->
+    图片块状化-无基线对齐，img{display:block}
+    图片底线对齐，img{vertical-align:boottom}
+    父级设置font-size:0
+    行高足够小-基线位置上移：.box{line-height:0}
+
+
+
+    <!-- 17响应式设计是什么，原理
+    rem是什么
+    响应式布局的常见方案 -->
+    响应式网站设计是一个网站能够兼容多个终端，而不是为某一个终端做一个特定的版本，
+    基本原理是通过媒体查询检测不同的设备屏幕尺寸做处理
+    页面头部必须有meta声明的viewport
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0 ,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+    PX像素，绝对单位，像素px是相对于显示器屏幕分辨率而言的
+    em相对长度单位，相对于父元素，不常用
+    rem,相对长度单位，相对于根元素html的字体大小，常用于响应式布局
+    <style>
+        html {
+            font-size: 100px;
+        }
+
+        body {
+            font-size: 20px;
+        }
+
+        div {
+            background: #000;
+            font-size: 2em;
+            width: 1em;
+            height: 1em;
+        }
+    </style>
+    <style>
+        html {
+            font-size: 100px;
+        }
+
+        body {
+            font-size: 20px;
+        }
+
+        div {
+            background: #000;
+            font-size: 80px;
+            width: 1em;
+            height: 1em;
+        }
+    </style>
+
+
+
+<!-- 18transition和animate有何区别 -->
+transition用于做过度效果，没有帧概念，只有开始和结束状态，性能开销较小，被动触发
+animate:用于做动画，有帧的概念，可以重复触发且有中间状态，性能开销较大，主动触发
+
+
+
+
+<!-- 19css3   willchange -->
+使用css3will-change提高页面滚动、动画等渲染性能
+will-change   scroll-position;opacity,transform,left,margin-top
+
+
+<!-- 20使一个元素显示以及隐藏的方式 -->
+display:none 
+结构上：元素在页面上将彻底消失，元素不占据空间且无法点击
+继承性：父元素设置了display:none 子元素无论怎么设置都无法显示
+性能：会引起浏览器重绘重排，性能消耗较大
+
+
+opacity:0
+结构上：父元素在页面上消失，元素占据空间可以点击
+继承性：父元素设置了opacity:0,子元素无论怎么设置都无法显示
+性能：重建图层，性能消耗小
+
+</body>
+
+</html>
